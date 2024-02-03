@@ -9,16 +9,19 @@ namespace WWWisky.inventory.unity
     [RequireComponent(typeof(InventoryMono))]
     public class CrafterMono : MonoBehaviour
     {
+        [SerializeField] private RecipeSO[] Recipes;
+
         public ICrafter Crafter { get; private set; }
 
 
         /// <summary>
         /// 
         /// </summary>
-        void Start()
+        void Awake()
         {
-            InventoryMono inventoryMono = GetComponent<InventoryMono>();
-            Crafter = new Crafter(inventoryMono.Inventory);
+            Crafter = new Crafter();
+            foreach (RecipeSO recipeSO in Recipes)
+                Crafter.Learn(recipeSO.Create());
         }
     }
 }

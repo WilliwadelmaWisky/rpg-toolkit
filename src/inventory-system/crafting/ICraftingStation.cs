@@ -9,7 +9,6 @@ namespace WWWisky.inventory.core
     {
         string Name { get; }
 
-        void Add(IRecipe recipe);
         void Craft(IRecipe recipe, int amount);
         void Access(ICrafter crafter);
     }

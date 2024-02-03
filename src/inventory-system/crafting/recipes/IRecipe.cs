@@ -10,6 +10,7 @@ namespace WWWisky.inventory.core
     {
         string ID { get; }
         string Name { get; }
+        RecipeType Type { get; }
 
         void Add(IRequirement requirement);
         void ForEach(Action<IRequirement, int> onLoop);

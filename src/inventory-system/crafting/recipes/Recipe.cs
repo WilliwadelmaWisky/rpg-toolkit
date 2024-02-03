@@ -11,6 +11,7 @@ namespace WWWisky.inventory.core
 	{
 		public string ID { get; }
 		public string Name { get; }
+        public RecipeType Type { get; }
 
 		private readonly ICraftable _craftable;
 		private readonly List<IRequirement> _requirementList;
@@ -22,11 +23,13 @@ namespace WWWisky.inventory.core
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="name"></param>
+        /// <param name="type"></param>
 		/// <param name="craftable"></param>
-		public Recipe(string id, string name, ICraftable craftable)
+		public Recipe(string id, string name, RecipeType type, ICraftable craftable)
 		{
 			ID = id;
 			Name = name;
+            Type = type;
 			_craftable = craftable;
 			_requirementList = new List<IRequirement>();
 			_requirementIDSet = new HashSet<string>();

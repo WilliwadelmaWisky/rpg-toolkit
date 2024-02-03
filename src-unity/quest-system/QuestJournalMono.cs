@@ -8,6 +8,8 @@ namespace WWWisky.quests.unity
     /// </summary>
     public class QuestJournalMono : MonoBehaviour
     {
+        [SerializeField] private QuestSO[] Quests;
+
         private QuestJournal _questJournal;
         private QuestTracker _questTracker;
 
@@ -19,6 +21,12 @@ namespace WWWisky.quests.unity
         {
             _questJournal = new QuestJournal();
             _questTracker = new QuestTracker();
+
+            foreach (QuestSO questSO in Quests)
+            {
+                IQuest quest = questSO.Create();
+                _questJournal.Add(quest);
+            }
 
             _questJournal.OnQuestEnded += OnQuestEnded;
         }

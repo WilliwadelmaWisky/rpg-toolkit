@@ -22,7 +22,7 @@ namespace WWWisky.inventory.unity.examples
         protected override IRecipe OnCreate(string id, string name)
         {
             ICraftable craftable = (ICraftable)Apple.Create();
-            Recipe recipe = new Recipe(id, name, craftable);
+            Recipe recipe = new Recipe(id, name, RecipeType.Crafting, craftable);
 
             for (int i = 0; i < Requirements.Length; i++)
             {

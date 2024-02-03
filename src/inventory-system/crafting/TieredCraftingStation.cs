@@ -19,7 +19,8 @@ namespace WWWisky.inventory.core
         /// 
         /// </summary>
         /// <param name="name"></param>
-        public TieredCraftingStation(string name) : base(name)
+        /// <param name="recipeType"></param>
+        public TieredCraftingStation(string name, RecipeType recipeType) : base(name, recipeType)
         {
             _tierList = new List<Tier>();
             TierIndex = 0;
@@ -42,8 +43,6 @@ namespace WWWisky.inventory.core
                 return;
 
             TierIndex++;
-            foreach (IRecipe recipe in CurrentTier)
-                Add(recipe);
         }
 
         /// <summary>

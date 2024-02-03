@@ -10,6 +10,7 @@ namespace WWWisky.inventory.unity
     {
         [SerializeField] private string ID;
         [SerializeField] private string Name;
+        [SerializeField] private RecipeType Type;
         [SerializeField] private Sprite Icon;
 
 

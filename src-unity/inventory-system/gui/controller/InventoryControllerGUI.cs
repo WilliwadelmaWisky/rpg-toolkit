@@ -64,7 +64,7 @@ namespace WWWisky.inventory.unity.gui
                 //_actionMenu.SetTransferInventory(null);
                 //_slotSelector.SetActionMenu(_actionMenu);
 
-                OpenInventoryGUI(craftingStationAccessEvent.Crafter.Inventory);
+                //OpenInventoryGUI(craftingStationAccessEvent.Crafter.Inventory);
             }
         }
 

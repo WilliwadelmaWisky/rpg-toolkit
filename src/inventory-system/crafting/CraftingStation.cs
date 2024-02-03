@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WWWisky.inventory.core
 {
@@ -9,10 +10,10 @@ namespace WWWisky.inventory.core
     public class CraftingStation : ICraftingStation
 	{
         public string Name { get; }
+        public RecipeType RecipeType { get; }
         protected ICrafter CurrentCrafter { get; private set; }
 
 		private readonly List<IRecipe> _recipeList;
-		private readonly HashSet<string> _recipeIDSet;
 
 		public int RecipeCount => _recipeList.Count;
 		
@@ -21,52 +22,18 @@ namespace WWWisky.inventory.core
 		/// 
 		/// </summary>
 		/// <param name="name"></param>
-		public CraftingStation(string name)
+        /// <param name="recipeType"></param>
+		public CraftingStation(string name, RecipeType recipeType)
 		{
             Name = name;
+            RecipeType = recipeType;
             CurrentCrafter = null;
 			_recipeList = new List<IRecipe>();
-			_recipeIDSet = new HashSet<string>();
 		}
 
 
         public IEnumerator<IRecipe> GetEnumerator() => _recipeList.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="recipe"></param>
-        /// <returns></returns>
-		public bool Contains(IRecipe recipe) => _recipeIDSet.Contains(recipe.ID);
-		
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="recipe"></param>
-		public void Add(IRecipe recipe)
-        {
-			if (recipe == null || Contains(recipe))
-				return;
-
-            _recipeList.Add(recipe);
-			_recipeIDSet.Add(recipe.ID);
-        }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="recipe"></param>
-		public void Remove(IRecipe recipe)
-        {
-			if (recipe == null || !Contains(recipe))
-				return;
-
-            _recipeList.Remove(recipe);
-            _recipeIDSet.Remove(recipe.ID);
-        }
 		
 		
 		/// <summary>
@@ -77,7 +44,7 @@ namespace WWWisky.inventory.core
 		/// <param name="crafter"></param>
 		public virtual void Craft(IRecipe recipe, int amount)
 		{
-			if (CurrentCrafter == null || !Contains(recipe))
+			if (CurrentCrafter == null)
 				return;
 
             CurrentCrafter.Craft(recipe, amount);
@@ -91,6 +58,9 @@ namespace WWWisky.inventory.core
         public void Access(ICrafter crafter)
         {
             CurrentCrafter = crafter;
+
+            _recipeList.Clear();
+            _recipeList.AddRange(CurrentCrafter.Where(recipe => recipe.Type == RecipeType));
 
             IEvent e = new Event_CraftingStationAccess(this, CurrentCrafter);
             EventSystem.Current.Broadcast(e);

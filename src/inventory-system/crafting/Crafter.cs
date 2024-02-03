@@ -1,20 +1,42 @@
-﻿namespace WWWisky.inventory.core
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace WWWisky.inventory.core
 {
     /// <summary>
     /// 
     /// </summary>
     public class Crafter : ICrafter
     {
-        public IInventory Inventory { get; }
+        private readonly List<IRecipe> _learnedRecipeList;
+        private readonly HashSet<string> _learnedRecipeIDSet;
 
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="inventory"></param>
-        public Crafter(IInventory inventory)
+        public Crafter()
         {
-            Inventory = inventory;
+            _learnedRecipeList = new List<IRecipe>();
+            _learnedRecipeIDSet = new HashSet<string>();
+        }
+
+
+        public IEnumerator<IRecipe> GetEnumerator() => _learnedRecipeList.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recipe"></param>
+        public void Learn(IRecipe recipe)
+        {
+            if (_learnedRecipeIDSet.Contains(recipe.ID))
+                return;
+
+            _learnedRecipeList.Add(recipe);
+            _learnedRecipeIDSet.Add(recipe.ID);
         }
 
 
@@ -36,20 +58,8 @@
             if (!result.Success)
                 return false;
 
-            Add(result.Craftable, result.Quantity);
+            //Add(result.Craftable, result.Quantity);
             return true;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="craftable"></param>
-        /// <param name="quantity"></param>
-        protected virtual void Add(ICraftable craftable, int quantity)
-        {
-            if (craftable is IItem item)
-                Inventory.AddItem(item, quantity);
         }
 
 

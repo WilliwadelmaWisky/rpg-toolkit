@@ -1,11 +1,13 @@
-﻿namespace WWWisky.inventory.core
+﻿using System.Collections.Generic;
+
+namespace WWWisky.inventory.core
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface ICrafter
+    public interface ICrafter : IEnumerable<IRecipe>
     {
-        IInventory Inventory { get; }
+        void Learn(IRecipe recipe);
 
         bool CanCraft(IRecipe recipe, int amount);
         bool Craft(IRecipe recipe, int amount);

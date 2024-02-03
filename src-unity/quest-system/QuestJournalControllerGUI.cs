@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using WWWisky.inventory.unity.gui;
 using WWWisky.quests.core;
 
 namespace WWWisky.quests.unity.gui

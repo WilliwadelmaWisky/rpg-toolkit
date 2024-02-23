@@ -6,10 +6,10 @@ The systems are also totally decoupled from each other so using just a single sy
 
 Work in Progress
 
-Features
-- Inventory
-- Quests
-- Achievements
+## Installation
+Not ready to be used.
 
-Installation
-- ...
+## Features
+- Inventory (Crafting, Shop etc.)
+- Quests (Level-system, Guild etc.)
+- Achievements
